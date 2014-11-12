@@ -24,7 +24,6 @@ import android.view.View;
 
 public class SendLocationActivity extends Activity {
 	
-	public static final String AUTHKEY = "un1c0rn5";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
