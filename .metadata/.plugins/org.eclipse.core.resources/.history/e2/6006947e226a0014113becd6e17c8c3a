@@ -1,0 +1,5 @@
+package com.coffeenbeer.location;
+
+public class CBRestClient {
+
+}

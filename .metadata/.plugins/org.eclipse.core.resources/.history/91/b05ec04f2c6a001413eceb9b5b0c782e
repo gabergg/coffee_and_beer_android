@@ -1,0 +1,98 @@
+package com.coffeenbeer.location;
+
+import com.loopj.android.http.*;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.Header;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.widget.TextView;
+
+public class SendLocationActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.activity_send_location);
+
+		new AsyncTask<String, Void, JSONObject>() {
+
+			@Override
+			protected JSONObject doInBackground(String... input) {
+
+				JSONObject jsonResponse = null;
+
+				try {
+
+					HttpClient httpclient = new DefaultHttpClient();
+				    HttpPost request = new HttpPost("http://www.coffeenbeer.com/move");
+				    
+				    try {
+				        // Add your data
+				        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+				        nameValuePairs.add(new BasicNameValuePair("lat", "43.073052"));
+				        nameValuePairs.add(new BasicNameValuePair("long", "AndDev is Cool!"));
+				        request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+				        // Execute HTTP Post Request
+				        HttpResponse response = httpclient.execute(httppost);
+				        
+				    } catch (ClientProtocolException e) {
+				        // TODO Auto-generated catch block
+				    } catch (IOException e) {
+				        // TODO Auto-generated catch block
+				    }
+
+					HttpResponse response = httpclient.execute(request);
+					String result = EntityUtils.toString(response.getEntity());
+					System.out.println(result);
+
+					//try {
+						jsonResponse = new JSONObject();
+						//jsonResponse = ja.getJSONObject(0);
+					/*} catch (JSONException e) {
+						e.printStackTrace();
+						return null;*/
+					//}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return jsonResponse;
+
+			}
+
+			@Override
+			protected void onPostExecute(JSONObject result) {
+				System.out.println(result);
+			}
+		}.execute();
+	}
+
+}

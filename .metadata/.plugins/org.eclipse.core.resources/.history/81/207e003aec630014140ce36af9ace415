@@ -1,0 +1,73 @@
+package com.coffeenbeer.location;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.widget.TextView;
+
+public class SendLocationActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		Map params = new HashMap();
+		params.put("lat", 47.606209);
+		params.put("long", -122.332071);
+		params.put("auth", "un1c0rn5");
+
+		try {
+			makeRequest("http://www.coffeenbeer.com/move", params);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		setContentView(R.layout.activity_send_location);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.send_location, menu);
+		return true;
+	}
+
+	public String makeRequest(String path, Map params) throws Exception {
+
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpost = new HttpPost(path);
+		Iterator iter = params.entrySet().iterator();
+
+		JSONObject holder = new JSONObject();
+
+		while (iter.hasNext()) {
+			Map.Entry pairs = (Map.Entry) iter.next();
+			String key = (String) pairs.getKey();
+			Double val = String.valueOf(pairs.getValue());
+
+			holder.put(key, val);
+		}
+
+		StringEntity se = new StringEntity(holder.toString());
+		httpost.setEntity(se);
+		httpost.setHeader("Accept", "application/json");
+		httpost.setHeader("Content-type", "application/json");
+
+		ResponseHandler responseHandler = new BasicResponseHandler();
+		HttpResponse response = httpclient.execute(httpost, responseHandler);
+		return response.toString();
+	}
+
+}
