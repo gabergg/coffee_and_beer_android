@@ -24,8 +24,6 @@ import android.view.View;
 
 public class SendLocationActivity extends Activity {
 	
-	public static final String AUTHKEY = "@secret/auth";
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,7 +58,7 @@ public class SendLocationActivity extends Activity {
 					nameValuePairs.add(new BasicNameValuePair("long",
 							String.valueOf(longitude)));
 					nameValuePairs.add(new BasicNameValuePair("auth",
-							AUTHKEY));
+							getString(R.string.auth)));
 					request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 					// Execute HTTP Post Request
