@@ -1,0 +1,4 @@
+*.class
+.metadata/*
+
+CnB/res/values/secrets.xml

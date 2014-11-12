@@ -24,13 +24,14 @@ import android.view.View;
 
 public class SendLocationActivity extends Activity {
 	
-	public static final String AUTHKEY = "un1c0rn5";
+	public static final String AUTHKEY = "@secret/auth";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_send_location);		
+		setContentView(R.layout.activity_send_location);	
 	}
+	
 	
 	public void updateLocation(View view) {
 		new AsyncTask<String, Void, JSONObject>() {
