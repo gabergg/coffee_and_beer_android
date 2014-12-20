@@ -16,5 +16,13 @@
         android:layout_centerVertical="true"
         android:text="@string/update_location"
         android:onClick="updateLocation" />
+    
+    <TextView
+       android:id="@+id/TextView01"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/text"
+       android:textSize=".25in" 
+       android:textStyle="bold"/>
 
 </RelativeLayout>
